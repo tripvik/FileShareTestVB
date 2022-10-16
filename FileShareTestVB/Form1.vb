@@ -24,16 +24,16 @@ Public Class Form1
     Declare Auto Function CloseHandle Lib "kernel32.dll" (ByVal handle As IntPtr) As Long
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim userName As String = "<USERNAME>"
-        Dim domain As String = "<DOMAIN>"
-        Dim password As String = "<PASSWORD>"
+        Dim userName As String = "<USERNAME>"   'Username Of the account To be impersonated
+        Dim domain As String = "<DOMAIN>"       'Domain of the user account. Use localhost for local accounts
+        Dim password As String = "<PASSWORD>"   'Account Password
 
         If impersonateValidUser(userName, domain, password) Then
             MessageBox.Show($"Successfully Impersonated as {WindowsIdentity.GetCurrent(False).Name}.{vbNewLine}Click OK to Copy the file.")
 
             'Insert your code that runs under the security context of a specific user here.
-            Dim src As String = "<SOURCE FILE PATH>"
-            Dim dest As String = "<DESTINATION FILE PATH>"
+            Dim src As String = "<SOURCE FILE PATH>"            'Path of the file to be copied
+            Dim dest As String = "<DESTINATION FILE PATH>"      'Destination path. For the Azure fileshare use the network path instead of the drive letter
             Try
                 File.Copy(src, dest, True)
                 MessageBox.Show($"Copied {src} to {dest} successfully.")
